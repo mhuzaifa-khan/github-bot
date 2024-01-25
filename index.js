@@ -1,14 +1,15 @@
 const jsonfile = require('jsonfile');
 const moment = require('moment');
-const simpleGit = require('simple-git')
+const simpleGit = require('simple-git');
 
 const FILE_Path = './data.json';
 
-const DATE = moment().format();
+const DATE = moment().subtract(1, 'd').format();
 
 const data = {
     date: DATE
 }
 
-jsonfile.writeFile(FILE_Path, data);
-simpleGit().add([FILE_Path]).commit(Date, { '--date': DATE }).push();
+jsonfile.writeFile(FILE_Path, data, () => {
+    simpleGit().add([FILE_Path]).commit(DATE, { '--date': DATE }).push();
+});
